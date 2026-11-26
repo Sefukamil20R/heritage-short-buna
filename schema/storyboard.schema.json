@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Heritage Short storyboard",
+  "type": "object",
+  "required": ["title", "language", "style_block", "character", "music", "endcard", "shots"],
+  "properties": {
+    "title": {"type": "string"},
+    "language": {"type": "string"},
+    "voice": {"type": "string"},
+    "voice_style": {"type": "string"},
+    "style_block": {"type": "string", "minLength": 10},
+    "character": {"type": "string", "minLength": 10},
+    "music": {
+      "type": "object",
+      "required": ["caption", "bpm", "duration_s"],
+      "properties": {
+        "caption": {"type": "string"},
+        "bpm": {"type": "integer", "minimum": 40, "maximum": 200},
+        "key": {"type": "string"},
+        "duration_s": {"type": "integer", "minimum": 30, "maximum": 120},
+        "cues": {"type": "array", "items": {"type": "object", "required": ["at_shot", "note"],
+          "properties": {"at_shot": {"type": "string"}, "note": {"type": "string"}}}}
+      }
+    },
+    "endcard": {"type": "object", "required": ["text", "duration_s"],
+      "properties": {"text": {"type": "string"}, "duration_s": {"type": "number", "minimum": 2, "maximum": 5}}},
+    "shots": {
+      "type": "array", "minItems": 8, "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": ["id", "duration_s", "reason", "shot_type", "image_prompt", "motion_prompt", "narration", "subtitle_en", "seed"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^s[0-9]{2}$"},
+          "duration_s": {"type": "number", "minimum": 3, "maximum": 12},
+          "reason": {"type": "string", "minLength": 10},
+          "shot_type": {"type": "string"},
+          "image_prompt": {"type": "string", "minLength": 10},
+          "motion_prompt": {"type": "string"},
+          "narration": {"type": "string", "minLength": 3},
+          "subtitle_en": {"type": "string", "minLength": 3},
+          "seed": {"type": "integer"}
+        }
+      }
+    }
+  }
+}
